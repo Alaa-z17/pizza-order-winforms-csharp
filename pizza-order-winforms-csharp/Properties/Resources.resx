@@ -121,13 +121,16 @@
   <data name="drink" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\drink.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pizza" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pizza.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="pizzaico" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pizzaico.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="pizza" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pizza.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="side" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\side.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Pizza_BackGround" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Pizza_BackGround.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

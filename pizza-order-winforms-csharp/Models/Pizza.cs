@@ -6,6 +6,9 @@
         public CrustType Crust { get; set; }
         public List<Topping> Toppings { get; set; }
 
+
+        public Pizza() : base("", 0) { }  // Parameterless constructor for JSON deserialization
+
         public Pizza(string name, int quantity, PizzaSize size, CrustType crust, List<Topping> toppings)
             : base(name, quantity)
         {

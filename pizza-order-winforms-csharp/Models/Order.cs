@@ -12,7 +12,7 @@ namespace PizzaOrderSystem.Models
         public List<BaseItem> Items { get; set; }
         public DateTime OrderTime { get; set; }
         public OrderStatus Status { get; set; }
-        public int PreparationSeconds { get; set; } = 900; // 15 min countdown
+        public int PreparationSeconds { get; set; } = 10; // 15 min countdown in real case
 
         public Order(Customer customer, List<BaseItem> items)
         {

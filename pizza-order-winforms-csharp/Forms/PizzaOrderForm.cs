@@ -1,4 +1,9 @@
-﻿using pizza_order_winforms_csharp;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
+using pizza_order_winforms_csharp;
 using PizzaOrderSystem.Models;
 using PizzaOrderSystem.Services;
 
@@ -11,11 +16,13 @@ namespace PizzaOrderSystem.Forms
         private Order? currentActiveOrder;
         private int remainingSeconds;
 
+
         public PizzaOrderForm()
         {
             InitializeComponent();
             InitializeCustomControls();
             LoadPizzaImage();
+
         }
 
         private void InitializeCustomControls()
@@ -40,18 +47,18 @@ namespace PizzaOrderSystem.Forms
             nudQuantity.Minimum = 1;
             nudQuantity.Maximum = 10;
             nudQuantity.Value = 1;
+
+            txtPhone.Validating += txtPhone_Validating;
         }
 
         private void LoadPizzaImage()
         {
             try
             {
-                // Try to load from embedded resources
                 picPizza.Image = Resources.pizza;
             }
             catch
             {
-                // Fallback: draw a simple placeholder
                 Bitmap bmp = new Bitmap(200, 150);
                 using (Graphics g = Graphics.FromImage(bmp))
                 {
@@ -112,11 +119,10 @@ namespace PizzaOrderSystem.Forms
 
         private void btnAddDrink_Click(object sender, EventArgs e)
         {
-            // Build the dialog
             Form dialog = new Form
             {
                 Text = "Add Drink",
-                Size = new Size(300, 200),
+                Size = new Size(300, 250),
                 StartPosition = FormStartPosition.CenterParent,
                 FormBorderStyle = FormBorderStyle.FixedDialog,
                 MaximizeBox = false,
@@ -130,7 +136,7 @@ namespace PizzaOrderSystem.Forms
                 DropDownStyle = ComboBoxStyle.DropDownList
             };
             cmbDrinkType.Items.AddRange(new[] { "Coca Cola", "Pepsi", "Sprite", "Fanta", "Water", "Orange Juice" });
-            cmbDrinkType.SelectedIndex = 0;
+            cmbDrinkType.SelectedIndex = 4;
 
             ComboBox cmbDrinkSize = new ComboBox
             {
@@ -233,12 +239,16 @@ namespace PizzaOrderSystem.Forms
 
         private void btnRemoveItem_Click(object sender, EventArgs e)
         {
-            if (lstCart.SelectedIndex >= 0 && lstCart.SelectedIndex < cartItems.Count)
+            if (lstCart.SelectedItems.Count > 0)
             {
-                var removedItem = cartItems[lstCart.SelectedIndex];
-                cartItems.RemoveAt(lstCart.SelectedIndex);
-                RefreshCartDisplay();
-                MessageBox.Show($"Removed {removedItem.Quantity} x {removedItem.Name}", "Item Removed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                int index = lstCart.SelectedIndices[0];
+                if (index >= 0 && index < cartItems.Count)
+                {
+                    var removedItem = cartItems[index];
+                    cartItems.RemoveAt(index);
+                    RefreshCartDisplay();
+                    MessageBox.Show($"Removed {removedItem.Quantity} x {removedItem.Name}", "Item Removed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
             else
             {
@@ -259,8 +269,60 @@ namespace PizzaOrderSystem.Forms
             }
         }
 
+        private void UpdateStatusBar(string message)
+        {
+            if (Parent is MainMDIForm mainForm)
+            {
+                mainForm.UpdateStatus(message);
+            }
+        }
         private void btnPlaceOrder_Click(object sender, EventArgs e)
         {
+            // Validate name
+            if (string.IsNullOrWhiteSpace(txtCustomerName.Text))
+            {
+                errorProvider.SetError(txtCustomerName, "Customer name is required!");
+                MessageBox.Show("Please enter customer name.", "Validation Error");  // Validate name
+                if (string.IsNullOrWhiteSpace(txtCustomerName.Text))
+                {
+                    errorProvider.SetError(txtCustomerName, "Customer name is required!");
+                    MessageBox.Show("Please enter customer name.", "Validation Error");
+                    txtCustomerName.Focus();
+                    return;
+                }
+                else
+                {
+                    errorProvider.SetError(txtCustomerName, "");
+                }
+
+                // Validate phone (trigger validation manually)
+                txtPhone_Validating(null, null!);
+                if (!string.IsNullOrEmpty(errorProvider.GetError(txtPhone)))
+                {
+                    MessageBox.Show("Please enter a valid phone number.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtPhone.Focus();
+                    return;
+                }
+                         
+                txtCustomerName.Focus();
+                return;
+            }
+            else
+            {
+                errorProvider.SetError(txtCustomerName, "");
+            }
+
+            // Validate phone (trigger validation manually)
+            txtPhone_Validating(null, null!);
+            if (!string.IsNullOrEmpty(errorProvider.GetError(txtPhone)))
+            {
+                MessageBox.Show("Please enter a valid phone number.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtPhone.Focus();
+                return;
+            }
+
+
+
             if (string.IsNullOrWhiteSpace(txtCustomerName.Text))
             {
                 errorProvider.SetError(txtCustomerName, "Customer name is required!");
@@ -336,31 +398,18 @@ namespace PizzaOrderSystem.Forms
             foreach (var item in cartItems)
             {
                 string displayText = $"{item.Quantity} x {item.Name} - {item.CalculateTotal():C}";
-                if (item is Pizza pizza)
-                {
-                    displayText += $" [{pizza.Size}, {pizza.Crust} crust]";
-                }
-                else if (item is Drink drink)
-                {
-                    displayText += $" [{drink.Size}]";
-                }
-                else if (item is Side side)
-                {
-                    displayText += $" [{side.SideType}]";
-                }
-                lstCart.Items.Add(displayText);
+                if (item is Pizza pizza) displayText += $" [{pizza.Size}, {pizza.Crust} crust]";
+                else if (item is Drink drink) displayText += $" [{drink.Size}]";
+                else if (item is Side side) displayText += $" [{side.SideType}]";
+
+                var listItem = new ListViewItem(displayText);
+                lstCart.Items.Add(listItem);
                 currentOrderTotal += item.CalculateTotal();
             }
 
             lblTotal.Text = $"Total: {currentOrderTotal:C}";
             lblItemCount.Text = $"Items: {cartItems.Count}";
-
-            if (currentOrderTotal > 50)
-                lblTotal.ForeColor = Color.Red;
-            else if (currentOrderTotal > 30)
-                lblTotal.ForeColor = Color.Orange;
-            else
-                lblTotal.ForeColor = Color.Green;
+            lblTotal.ForeColor = currentOrderTotal > 50 ? Color.Red : (currentOrderTotal > 30 ? Color.Orange : Color.FromArgb(220, 80, 20));
         }
 
         private void CountdownTimer_Tick(object sender, EventArgs e)
@@ -408,14 +457,7 @@ namespace PizzaOrderSystem.Forms
             currentActiveOrder = null;
         }
 
-        private void UpdateStatusBar(string message)
-        {
-            // Optional: update parent MDI status strip
-            if (Parent is MainMDIForm mainForm)
-            {
-                // You can expose a method in MainMDIForm to update statusLabel.Text
-            }
-        }
+     
 
         private void txtCustomerName_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -426,6 +468,26 @@ namespace PizzaOrderSystem.Forms
             else
             {
                 errorProvider.SetError(txtCustomerName, "");
+            }
+        }
+
+        private void txtPhone_Validating(object? sender, System.ComponentModel.CancelEventArgs e)
+        {
+            string phone = txtPhone.Text.Trim();
+            if (string.IsNullOrWhiteSpace(phone))
+            {
+                errorProvider.SetError(txtPhone, "Phone number is required.");
+                return;
+            }
+            // Basic phone validation: at least 10 digits, allow spaces, dashes, parentheses, plus sign
+            string digitsOnly = new string(phone.Where(char.IsDigit).ToArray());
+            if (digitsOnly.Length < 10 || digitsOnly.Length > 15)
+            {
+                errorProvider.SetError(txtPhone, "Enter a valid phone number (10-15 digits).");
+            }
+            else
+            {
+                errorProvider.SetError(txtPhone, ""); // clear error
             }
         }
     }

@@ -1,181 +1,172 @@
-﻿
-using pizza_order_winforms_csharp;
+﻿using pizza_order_winforms_csharp;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace PizzaOrderSystem
 {
     partial class MainMDIForm
     {
         private System.ComponentModel.IContainer components = null;
-        private System.Windows.Forms.MenuStrip menuStrip;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem newOrderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem windowToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem cascadeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem tileHorizontalToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem tileVerticalToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem closeAllToolStripMenuItem;
-        private System.Windows.Forms.StatusStrip statusStrip;
-        private System.Windows.Forms.ToolStripStatusLabel statusLabel;
-        private System.Windows.Forms.ToolStrip toolStrip;
-        private System.Windows.Forms.ToolStripButton newOrderButton;
+        private MenuStrip menuStrip;
+        private ToolStripMenuItem fileToolStripMenuItem;
+        private ToolStripMenuItem newOrderToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator1;
+        private ToolStripMenuItem exitToolStripMenuItem;
+        private ToolStripMenuItem windowToolStripMenuItem;
+        private ToolStripMenuItem cascadeToolStripMenuItem;
+        private ToolStripMenuItem tileHorizontalToolStripMenuItem;
+        private ToolStripMenuItem tileVerticalToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator2;
+        private ToolStripMenuItem closeAllToolStripMenuItem;
+        private StatusStrip statusStrip;
+        internal ToolStripStatusLabel statusLabel;
+        private ToolStrip toolStrip;
+        private ToolStripButton newOrderButton;
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
+            if (disposing && (components != null)) components.Dispose();
             base.Dispose(disposing);
         }
 
         private void InitializeComponent()
         {
-            this.menuStrip = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cascadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tileHorizontalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tileVerticalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.closeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStrip = new System.Windows.Forms.ToolStrip();
-            this.newOrderButton = new System.Windows.Forms.ToolStripButton();
+            this.menuStrip = new MenuStrip();
+            this.fileToolStripMenuItem = new ToolStripMenuItem();
+            this.newOrderToolStripMenuItem = new ToolStripMenuItem();
+            this.toolStripSeparator1 = new ToolStripSeparator();
+            this.exitToolStripMenuItem = new ToolStripMenuItem();
+            this.windowToolStripMenuItem = new ToolStripMenuItem();
+            this.cascadeToolStripMenuItem = new ToolStripMenuItem();
+            this.tileHorizontalToolStripMenuItem = new ToolStripMenuItem();
+            this.tileVerticalToolStripMenuItem = new ToolStripMenuItem();
+            this.toolStripSeparator2 = new ToolStripSeparator();
+            this.closeAllToolStripMenuItem = new ToolStripMenuItem();
+            this.statusStrip = new StatusStrip();
+            this.statusLabel = new ToolStripStatusLabel();
+            this.toolStrip = new ToolStrip();
+            this.newOrderButton = new ToolStripButton();
+
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.SuspendLayout();
 
             // menuStrip
-            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.windowToolStripMenuItem});
-            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.BackColor = Color.FromArgb(40, 40, 40);
+            this.menuStrip.ForeColor = Color.White;
+            this.menuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, windowToolStripMenuItem });
+            this.menuStrip.Location = new Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(984, 24);
+            this.menuStrip.Size = new Size(984, 28);
             this.menuStrip.TabIndex = 1;
-            this.menuStrip.Text = "menuStrip1";
 
             // fileToolStripMenuItem
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newOrderToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { newOrderToolStripMenuItem, toolStripSeparator1, exitToolStripMenuItem });
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Size = new Size(44, 24);
             this.fileToolStripMenuItem.Text = "&File";
 
             // newOrderToolStripMenuItem
-            this.newOrderToolStripMenuItem.Image = Resources.pizza;
-           
+             this.newOrderToolStripMenuItem.Image = Resources.pizza; 
             this.newOrderToolStripMenuItem.Name = "newOrderToolStripMenuItem";
-            this.newOrderToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newOrderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newOrderToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.N;
+            this.newOrderToolStripMenuItem.Size = new Size(180, 26);
             this.newOrderToolStripMenuItem.Text = "&New Order";
-            this.newOrderToolStripMenuItem.Click += new System.EventHandler(this.newOrderToolStripMenuItem_Click);
+            this.newOrderToolStripMenuItem.Click += newOrderToolStripMenuItem_Click;
 
             // toolStripSeparator1
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new Size(177, 6);
 
             // exitToolStripMenuItem
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.ShortcutKeys = Keys.Alt | Keys.F4;
+            this.exitToolStripMenuItem.Size = new Size(180, 26);
             this.exitToolStripMenuItem.Text = "E&xit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
 
             // windowToolStripMenuItem
-            this.windowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cascadeToolStripMenuItem,
-            this.tileHorizontalToolStripMenuItem,
-            this.tileVerticalToolStripMenuItem,
-            this.toolStripSeparator2,
-            this.closeAllToolStripMenuItem});
+            this.windowToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { cascadeToolStripMenuItem, tileHorizontalToolStripMenuItem, tileVerticalToolStripMenuItem, toolStripSeparator2, closeAllToolStripMenuItem });
             this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
-            this.windowToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
+            this.windowToolStripMenuItem.Size = new Size(70, 24);
             this.windowToolStripMenuItem.Text = "&Window";
 
             // cascadeToolStripMenuItem
             this.cascadeToolStripMenuItem.Name = "cascadeToolStripMenuItem";
-            this.cascadeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cascadeToolStripMenuItem.Size = new Size(160, 26);
             this.cascadeToolStripMenuItem.Text = "&Cascade";
-            this.cascadeToolStripMenuItem.Click += new System.EventHandler(this.cascadeToolStripMenuItem_Click);
+            this.cascadeToolStripMenuItem.Click += cascadeToolStripMenuItem_Click;
 
             // tileHorizontalToolStripMenuItem
             this.tileHorizontalToolStripMenuItem.Name = "tileHorizontalToolStripMenuItem";
-            this.tileHorizontalToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.tileHorizontalToolStripMenuItem.Size = new Size(160, 26);
             this.tileHorizontalToolStripMenuItem.Text = "Tile &Horizontal";
-            this.tileHorizontalToolStripMenuItem.Click += new System.EventHandler(this.tileHorizontalToolStripMenuItem_Click);
+            this.tileHorizontalToolStripMenuItem.Click += tileHorizontalToolStripMenuItem_Click;
 
             // tileVerticalToolStripMenuItem
             this.tileVerticalToolStripMenuItem.Name = "tileVerticalToolStripMenuItem";
-            this.tileVerticalToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.tileVerticalToolStripMenuItem.Size = new Size(160, 26);
             this.tileVerticalToolStripMenuItem.Text = "Tile &Vertical";
-            this.tileVerticalToolStripMenuItem.Click += new System.EventHandler(this.tileVerticalToolStripMenuItem_Click);
+            this.tileVerticalToolStripMenuItem.Click += tileVerticalToolStripMenuItem_Click;
 
             // toolStripSeparator2
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Size = new Size(157, 6);
 
             // closeAllToolStripMenuItem
             this.closeAllToolStripMenuItem.Name = "closeAllToolStripMenuItem";
-            this.closeAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.closeAllToolStripMenuItem.Size = new Size(160, 26);
             this.closeAllToolStripMenuItem.Text = "&Close All";
-            this.closeAllToolStripMenuItem.Click += new System.EventHandler(this.closeAllToolStripMenuItem_Click);
+            this.closeAllToolStripMenuItem.Click += closeAllToolStripMenuItem_Click;
 
             // statusStrip
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.statusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 642);
+            this.statusStrip.BackColor = Color.FromArgb(50, 50, 50);
+            this.statusStrip.Items.AddRange(new ToolStripItem[] { statusLabel });
+            this.statusStrip.Location = new Point(0, 642);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(984, 22);
+            this.statusStrip.Size = new Size(984, 28);
             this.statusStrip.TabIndex = 2;
-            this.statusStrip.Text = "statusStrip1";
 
             // statusLabel
+            this.statusLabel.ForeColor = Color.White;
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(199, 17);
-            this.statusLabel.Text = "Ready - Create a new pizza order";
+            this.statusLabel.Size = new Size(220, 23);
+            this.statusLabel.Text = "🍕 Ready - Create a new pizza order";
 
             // toolStrip
-            this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newOrderButton});
-            this.toolStrip.Location = new System.Drawing.Point(0, 24);
+            this.toolStrip.BackColor = Color.FromArgb(220, 80, 20);
+            this.toolStrip.ForeColor = Color.White;
+            this.toolStrip.Items.AddRange(new ToolStripItem[] { newOrderButton });
+            this.toolStrip.Location = new Point(0, 28);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(984, 25);
+            this.toolStrip.Size = new Size(984, 32);
             this.toolStrip.TabIndex = 3;
-            this.toolStrip.Text = "toolStrip1";
 
             // newOrderButton
-            this.newOrderButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.ImageAndText;
-            this.newOrderButton.Image = Resources.pizza;
-            this.newOrderButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.newOrderButton.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
+            this.newOrderButton.Image = Resources.pizza; 
+            this.newOrderButton.ImageTransparentColor = Color.Magenta;
             this.newOrderButton.Name = "newOrderButton";
-            this.newOrderButton.Size = new System.Drawing.Size(85, 22);
+            this.newOrderButton.Size = new Size(95, 29);
             this.newOrderButton.Text = "New Order";
-            this.newOrderButton.Click += new System.EventHandler(this.newOrderToolStripMenuItem_Click);
+            this.newOrderButton.Click += newOrderToolStripMenuItem_Click;
 
             // MainMDIForm
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(984, 664);
-            this.Controls.Add(this.toolStrip);
-            this.Controls.Add(this.statusStrip);
-            this.Controls.Add(this.menuStrip);
+            this.AutoScaleDimensions = new SizeF(7F, 15F);
+            this.AutoScaleMode = AutoScaleMode.Font;
+            this.BackColor = Color.FromArgb(240, 240, 240);
+            this.ClientSize = new Size(984, 670);
+            this.Controls.Add(toolStrip);
+            this.Controls.Add(statusStrip);
+            this.Controls.Add(menuStrip);
             this.IsMdiContainer = true;
-            this.MainMenuStrip = this.menuStrip;
+            this.MainMenuStrip = menuStrip;
             this.Name = "MainMDIForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "🍕 Pizza Order System - Restaurant Management";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.WindowState = FormWindowState.Maximized;
+
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.statusStrip.ResumeLayout(false);
@@ -184,8 +175,6 @@ namespace PizzaOrderSystem
             this.toolStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
-         
         }
     }
 }

@@ -1,5 +1,5 @@
 using System;
-using pizza_order_winforms_csharp;
+using System.Windows.Forms;
 using PizzaOrderSystem.Forms;
 
 namespace PizzaOrderSystem
@@ -8,7 +8,6 @@ namespace PizzaOrderSystem
     {
         public MainMDIForm()
         {
-           
             InitializeComponent();
         }
 
@@ -50,6 +49,10 @@ namespace PizzaOrderSystem
             var child = new PizzaOrderForm();
             child.MdiParent = this;
             child.Show();
+        }
+        public void UpdateStatus(string message)
+        {
+            statusLabel.Text = message;
         }
     }
 }

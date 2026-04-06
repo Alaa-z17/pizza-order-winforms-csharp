@@ -3,6 +3,7 @@
     public class Side : BaseItem
     {
         public SideType SideType { get; set; }
+        public Side() : base("", 0) { }
         public Side(string name, int quantity, SideType type) : base(name, quantity)
         {
             SideType = type;

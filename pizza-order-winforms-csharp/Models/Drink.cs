@@ -3,6 +3,7 @@
     public class Drink : BaseItem
     {
         public DrinkSize Size { get; set; }
+        public Drink() : base("", 0) { }
         public Drink(string name, int quantity, DrinkSize size) : base(name, quantity)
         {
             Size = size;

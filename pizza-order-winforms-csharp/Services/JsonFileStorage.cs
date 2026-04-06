@@ -1,6 +1,9 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using PizzaOrderSystem.Models;
 
 namespace PizzaOrderSystem.Services
 {
@@ -10,20 +13,24 @@ namespace PizzaOrderSystem.Services
         private static readonly JsonSerializerOptions _options = new JsonSerializerOptions
         {
             WriteIndented = true,
-            Converters = { new JsonStringEnumConverter() }
+            Converters =
+            {
+                new JsonStringEnumConverter(),
+                new PolymorphicBaseItemConverter()  // Add this line
+            }
         };
 
-        public static void SaveOrders(List<Models.Order> orders)
+        public static void SaveOrders(List<Order> orders)
         {
             string json = JsonSerializer.Serialize(orders, _options);
             File.WriteAllText(_dataPath, json);
         }
 
-        public static List<Models.Order> LoadOrders()
+        public static List<Order> LoadOrders()
         {
-            if (!File.Exists(_dataPath)) return new List<Models.Order>();
+            if (!File.Exists(_dataPath)) return new List<Order>();
             string json = File.ReadAllText(_dataPath);
-            return JsonSerializer.Deserialize<List<Models.Order>>(json, _options) ?? new List<Models.Order>();
+            return JsonSerializer.Deserialize<List<Order>>(json, _options) ?? new List<Order>();
         }
     }
 }

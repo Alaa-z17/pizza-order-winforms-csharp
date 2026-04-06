@@ -6,9 +6,8 @@ namespace PizzaOrderSystem.Models
     {
         [Required(ErrorMessage = "Customer name is required")]
         [StringLength(100, MinimumLength = 2, ErrorMessage = "Name must be between 2 and 100 characters")]
-        public string Name { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;   // default value
 
-        [Required(ErrorMessage = "Phone number is required")]
         [Phone(ErrorMessage = "Invalid phone number format")]
         public string Phone { get; set; } = string.Empty;
 
@@ -17,12 +16,11 @@ namespace PizzaOrderSystem.Models
 
         public Customer() { }
 
-        // Standard constructor for manual creation
         public Customer(string name, string phone, string address = "")
         {
-            Name = name;
-            Phone = phone;
-            Address = address;
+            Name = name ?? string.Empty;
+            Phone = phone ?? string.Empty;
+            Address = address ?? string.Empty;
         }
     }
 }

@@ -6,7 +6,7 @@ namespace PizzaOrderSystem.Models
 {
     public class Order
     {
-        private static int _nextId = 1;
+        public static int _nextId = 1;
         public int OrderId { get; private set; }
         public Customer Customer { get; set; }
         public List<BaseItem> Items { get; set; }

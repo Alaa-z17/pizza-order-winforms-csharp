@@ -21,6 +21,8 @@ namespace PizzaOrderSystem.Models
             Items = items ?? new List<BaseItem>();
             OrderTime = DateTime.Now;
             Status = OrderStatus.Pending;
+            var settings = pizza_order_winforms_csharp.AppSettings.LoadSettings();
+            PreparationSeconds = settings.DefaultPreparationSeconds;
         }
 
         public decimal TotalAmount => Items.Sum(i => i.CalculateTotal());

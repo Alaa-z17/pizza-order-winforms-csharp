@@ -20,6 +20,7 @@
 
         private decimal CalculateUnitPrice()
         {
+            var settings = pizza_order_winforms_csharp.AppSettings.LoadSettings();
             decimal price = Size switch
             {
                 PizzaSize.Small => 8.99m,
@@ -28,9 +29,8 @@
                 PizzaSize.Family => 15.99m,
                 _ => 10.99m
             };
-            // Extra for stuffed crust
+            price *= settings.PizzaPriceMultiplier;
             if (Crust == CrustType.Stuffed) price += 2.00m;
-            // Extra per topping (first topping free, then $1 each)
             int extraToppings = Math.Max(0, Toppings.Count - 1);
             price += extraToppings * 1.00m;
             return price;

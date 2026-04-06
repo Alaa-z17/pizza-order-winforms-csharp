@@ -7,7 +7,9 @@
         public Drink(string name, int quantity, DrinkSize size) : base(name, quantity)
         {
             Size = size;
-            UnitPrice = size == DrinkSize.Small ? 1.99m : size == DrinkSize.Medium ? 2.49m : 2.99m;
+            var settings = pizza_order_winforms_csharp.AppSettings.LoadSettings();
+            decimal basePrice = size == DrinkSize.Small ? 1.99m : size == DrinkSize.Medium ? 2.49m : 2.99m;
+            UnitPrice = basePrice * settings.DrinkPriceMultiplier;
         }
         public override string GetDescription() => $"{Size} {Name}";
     }

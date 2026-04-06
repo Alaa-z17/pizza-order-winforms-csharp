@@ -12,7 +12,16 @@ namespace PizzaOrderSystem
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.Opaque, true);
             this.SetStyle(ControlStyles.ResizeRedraw, true);
             InitializeComponent();
+            InitializeCustomMenuItems();
         }
+
+        private void InitializeCustomMenuItems()
+        {
+            var historyMenuItem = new ToolStripMenuItem("عرض الطلبات");
+            historyMenuItem.Click += (s, e) => new OrderHistoryForm().ShowDialog();
+            fileToolStripMenuItem.DropDownItems.Insert(1, historyMenuItem);
+        }
+
 
         //override from the base class
         protected override void OnHandleCreated(EventArgs e)

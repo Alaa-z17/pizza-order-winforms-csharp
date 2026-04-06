@@ -1,11 +1,12 @@
-﻿using System;
+﻿using pizza_order_winforms_csharp;
+using PizzaOrderSystem.Models;
+using PizzaOrderSystem.Services;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using pizza_order_winforms_csharp;
-using PizzaOrderSystem.Models;
-using PizzaOrderSystem.Services;
 
 namespace PizzaOrderSystem.Forms
 {
@@ -103,13 +104,23 @@ namespace PizzaOrderSystem.Forms
                 string pizzaName = $"{selectedSize} Pizza";
 
                 var pizza = new Pizza(pizzaName, quantity, selectedSize, selectedCrust, selectedToppings);
-                cartItems.Add(pizza);
+                // Find matching pizza
+                var existing = FindMatchingPizza(pizza);
+                if (existing != null)
+                {
+                    existing.Quantity += pizza.Quantity;
+                    MessageBox.Show($"✓ Added {pizza.Quantity} more {pizza.Size} pizza (total: {existing.Quantity})",
+                                    "Quantity Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    cartItems.Add(pizza);
+                    MessageBox.Show($"✓ Added {pizza.Quantity} x {pizza.Size} {pizza.Crust} crust pizza\n" +
+                                    $"Toppings: {(selectedToppings.Count == 0 ? "None" : string.Join(", ", selectedToppings))}\n" +
+                                    $"Subtotal: {pizza.CalculateTotal():C}",
+                                    "Pizza Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
                 RefreshCartDisplay();
-
-                MessageBox.Show($"✓ Added {quantity} x {selectedSize} {selectedCrust} crust pizza\n" +
-                              $"Toppings: {(selectedToppings.Count == 0 ? "None" : string.Join(", ", selectedToppings))}\n" +
-                              $"Subtotal: {pizza.CalculateTotal():C}",
-                              "Pizza Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -179,7 +190,19 @@ namespace PizzaOrderSystem.Forms
 
                 int qty = (int)nudDrinkQty.Value;
                 var drink = new Drink(drinkName, qty, size);
-                cartItems.Add(drink);
+                var existing = FindMatchingDrink(drink);
+                if (existing != null)
+                {
+                    existing.Quantity += drink.Quantity;
+                    MessageBox.Show($"✓ Added {drink.Quantity} more {drink.Size} {drink.Name} (total: {existing.Quantity})",
+                                    "Quantity Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    cartItems.Add(drink);
+                    MessageBox.Show($"✓ Added {drink.Quantity} x {drink.Size} {drink.Name}",
+                                    "Drink Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
                 RefreshCartDisplay();
 
                 MessageBox.Show($"✓ Added {qty} x {size} {drinkName}", "Drink Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -231,9 +254,20 @@ namespace PizzaOrderSystem.Forms
                 }
                 int qty = (int)nudSideQty.Value;
                 var side = new Side(type.ToString(), qty, type);
-                cartItems.Add(side);
+                var existing = FindMatchingSide(side);
+                if (existing != null)
+                {
+                    existing.Quantity += side.Quantity;
+                    MessageBox.Show($"✓ Added {side.Quantity} more {side.SideType} (total: {existing.Quantity})",
+                                    "Quantity Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    cartItems.Add(side);
+                    MessageBox.Show($"✓ Added {side.Quantity} x {side.SideType}",
+                                    "Side Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
                 RefreshCartDisplay();
-                MessageBox.Show($"✓ Added {qty} x {type}", "Side Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -282,50 +316,6 @@ namespace PizzaOrderSystem.Forms
             if (string.IsNullOrWhiteSpace(txtCustomerName.Text))
             {
                 errorProvider.SetError(txtCustomerName, "Customer name is required!");
-                MessageBox.Show("Please enter customer name.", "Validation Error");  // Validate name
-                if (string.IsNullOrWhiteSpace(txtCustomerName.Text))
-                {
-                    errorProvider.SetError(txtCustomerName, "Customer name is required!");
-                    MessageBox.Show("Please enter customer name.", "Validation Error");
-                    txtCustomerName.Focus();
-                    return;
-                }
-                else
-                {
-                    errorProvider.SetError(txtCustomerName, "");
-                }
-
-                // Validate phone (trigger validation manually)
-                txtPhone_Validating(null, null!);
-                if (!string.IsNullOrEmpty(errorProvider.GetError(txtPhone)))
-                {
-                    MessageBox.Show("Please enter a valid phone number.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtPhone.Focus();
-                    return;
-                }
-                         
-                txtCustomerName.Focus();
-                return;
-            }
-            else
-            {
-                errorProvider.SetError(txtCustomerName, "");
-            }
-
-            // Validate phone (trigger validation manually)
-            txtPhone_Validating(null, null!);
-            if (!string.IsNullOrEmpty(errorProvider.GetError(txtPhone)))
-            {
-                MessageBox.Show("Please enter a valid phone number.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtPhone.Focus();
-                return;
-            }
-
-
-
-            if (string.IsNullOrWhiteSpace(txtCustomerName.Text))
-            {
-                errorProvider.SetError(txtCustomerName, "Customer name is required!");
                 MessageBox.Show("Please enter customer name.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtCustomerName.Focus();
                 return;
@@ -335,31 +325,41 @@ namespace PizzaOrderSystem.Forms
                 errorProvider.SetError(txtCustomerName, "");
             }
 
+            // Validate phone
+            txtPhone_Validating(null, new CancelEventArgs());
+            if (!string.IsNullOrEmpty(errorProvider.GetError(txtPhone)))
+            {
+                MessageBox.Show("Please enter a valid phone number.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtPhone.Focus();
+                return;
+            }
+
+            // Validate cart not empty
             if (cartItems.Count == 0)
             {
                 MessageBox.Show("Please add at least one item (pizza, drink, or side) to the order.", "Empty Cart", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
+            // Create and place order
             var customer = new Customer(txtCustomerName.Text.Trim(), txtPhone.Text.Trim(), txtAddress.Text);
             var order = new Order(customer, new List<BaseItem>(cartItems));
-
             OrderManager.PlaceOrder(order);
 
             string orderSummary = $"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
-                                 $"          ORDER CONFIRMED\n" +
-                                 $"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
-                                 $"Order #: {order.OrderId}\n" +
-                                 $"Customer: {order.Customer.Name}\n" +
-                                 $"Phone: {order.Customer.Phone}\n" +
-                                 $"Time: {order.OrderTime:hh:mm tt}\n" +
-                                 $"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
-                                 $"Items: {cartItems.Count}\n" +
-                                 $"Total: {order.TotalAmount:C}\n" +
-                                 $"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
-                                 $"Status: {order.Status}\n" +
-                                 $"Est. Ready: {DateTime.Now.AddSeconds(order.PreparationSeconds):hh:mm tt}\n" +
-                                 $"━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
+                                  $"          ORDER CONFIRMED\n" +
+                                  $"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
+                                  $"Order #: {order.OrderId}\n" +
+                                  $"Customer: {order.Customer.Name}\n" +
+                                  $"Phone: {order.Customer.Phone}\n" +
+                                  $"Time: {order.OrderTime:hh:mm tt}\n" +
+                                  $"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
+                                  $"Items: {cartItems.Count}\n" +
+                                  $"Total: {order.TotalAmount:C}\n" +
+                                  $"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
+                                  $"Status: {order.Status}\n" +
+                                  $"Est. Ready: {DateTime.Now.AddSeconds(order.PreparationSeconds):hh:mm tt}\n" +
+                                  $"━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
 
             MessageBox.Show(orderSummary, "Order Placed Successfully", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -489,6 +489,26 @@ namespace PizzaOrderSystem.Forms
             {
                 errorProvider.SetError(txtPhone, ""); // clear error
             }
+        }
+        private Pizza? FindMatchingPizza(Pizza newPizza)
+        {
+            return cartItems.OfType<Pizza>().FirstOrDefault(p =>
+                p.Size == newPizza.Size &&
+                p.Crust == newPizza.Crust &&
+                p.Toppings.SequenceEqual(newPizza.Toppings));
+        }
+
+        private Drink? FindMatchingDrink(Drink newDrink)
+        {
+            return cartItems.OfType<Drink>().FirstOrDefault(d =>
+                d.Name == newDrink.Name &&
+                d.Size == newDrink.Size);
+        }
+
+        private Side? FindMatchingSide(Side newSide)
+        {
+            return cartItems.OfType<Side>().FirstOrDefault(s =>
+                s.SideType == newSide.SideType);
         }
     }
 }

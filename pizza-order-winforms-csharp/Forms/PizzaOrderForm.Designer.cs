@@ -58,6 +58,7 @@ namespace PizzaOrderSystem.Forms
         private void InitializeComponent()
         {
             components = new Container();
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(PizzaOrderForm));
             errorProvider = new ErrorProvider(components);
             toolTip = new ToolTip(components);
             txtCustomerName = new TextBox();
@@ -409,7 +410,7 @@ namespace PizzaOrderSystem.Forms
             lstCart.TabIndex = 0;
             lstCart.UseCompatibleStateImageBehavior = false;
             lstCart.View = View.Details;
-            this.lstCart.Columns.Add("Item", 400);   
+            this.lstCart.Columns.Add("Item", 400);
             // 
             // lblItemCount
             // 
@@ -533,10 +534,11 @@ namespace PizzaOrderSystem.Forms
             Controls.Add(grpCart);
             Controls.Add(grpPizza);
             Controls.Add(grpCustomer);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 4, 3, 4);
             Name = "PizzaOrderForm";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "🍕 New Pizza Order";
+            Text = "New Pizza Order";
             ((ISupportInitialize)errorProvider).EndInit();
             grpCustomer.ResumeLayout(false);
             grpCustomer.PerformLayout();

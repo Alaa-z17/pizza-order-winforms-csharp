@@ -1,26 +1,33 @@
-﻿namespace PizzaOrderSystem.Models
+﻿using pizza_order_winforms_csharp;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace PizzaOrderSystem.Models
 {
     public class Pizza : BaseItem
     {
         public PizzaSize Size { get; set; }
         public CrustType Crust { get; set; }
-        public List<Topping> Toppings { get; set; }
+        public List<Topping> Toppings { get; set; } = new List<Topping>(); // Initialize with empty list
 
-
-        public Pizza() : base("", 0) { }  // Parameterless constructor for JSON deserialization
+        public Pizza() : base("", 0)
+        {
+            Toppings = new List<Topping>(); // Ensure initialized
+        }
 
         public Pizza(string name, int quantity, PizzaSize size, CrustType crust, List<Topping> toppings)
             : base(name, quantity)
         {
             Size = size;
             Crust = crust;
-            Toppings = toppings ?? new List<Topping>();
+            Toppings = toppings ?? new List<Topping>(); // Handle null
             UnitPrice = CalculateUnitPrice();
         }
 
         private decimal CalculateUnitPrice()
         {
-            var settings = pizza_order_winforms_csharp.AppSettings.LoadSettings();
+            var settings = PricesSettings.Load();
             decimal price = Size switch
             {
                 PizzaSize.Small => 8.99m,

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace PizzaOrderSystem.Models
+﻿namespace PizzaOrderSystem.Models
 {
     public class Order
     {
@@ -12,7 +8,7 @@ namespace PizzaOrderSystem.Models
         public List<BaseItem> Items { get; set; }
         public DateTime OrderTime { get; set; }
         public OrderStatus Status { get; set; }
-        public int PreparationSeconds { get; set; } = 10; // 15 min countdown in real case
+        public int PreparationSeconds { get; set; } = 10;
 
         public Order(Customer customer, List<BaseItem> items)
         {
@@ -21,12 +17,11 @@ namespace PizzaOrderSystem.Models
             Items = items ?? new List<BaseItem>();
             OrderTime = DateTime.Now;
             Status = OrderStatus.Pending;
-            var settings = pizza_order_winforms_csharp.AppSettings.LoadSettings();
+            var settings = PricesSettings.Load();
             PreparationSeconds = settings.DefaultPreparationSeconds;
         }
 
         public decimal TotalAmount => Items.Sum(i => i.CalculateTotal());
-
         public string Summary => $"{OrderId}: {Customer.Name} - {TotalAmount:C} - {Status}";
     }
 }

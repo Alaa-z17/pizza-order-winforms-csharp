@@ -14,9 +14,7 @@ namespace PizzaOrderSystem.Models
             Quantity = quantity;
         }
 
-        // Virtual method – polymorphism
         public virtual decimal CalculateTotal() => UnitPrice * Quantity;
-
-        public abstract string GetDescription(); // forces override
+        public abstract string GetDescription();
     }
 }

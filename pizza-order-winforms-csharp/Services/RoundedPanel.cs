@@ -16,70 +16,30 @@ namespace PizzaOrderSystem
 
         [Category("Appearance")]
         [DefaultValue(20)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        public int BorderRadius
-        {
-            get => _borderRadius;
-            set { _borderRadius = value; Invalidate(); }
-        }
+        public int BorderRadius { get => _borderRadius; set { _borderRadius = value; Invalidate(); } }
 
         [Category("Appearance")]
         [DefaultValue(typeof(Color), "220,80,20")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        public Color BorderColor
-        {
-            get => _borderColor;
-            set { _borderColor = value; Invalidate(); }
-        }
+        public Color BorderColor { get => _borderColor; set { _borderColor = value; Invalidate(); } }
 
         [Category("Appearance")]
         [DefaultValue(2)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        public int BorderWidth
-        {
-            get => _borderWidth;
-            set { _borderWidth = value; Invalidate(); }
-        }
+        public int BorderWidth { get => _borderWidth; set { _borderWidth = value; Invalidate(); } }
 
         [Category("Appearance")]
         [DefaultValue("")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        public string TitleText
-        {
-            get => _titleText;
-            set { _titleText = value; Invalidate(); }
-        }
+        public string TitleText { get => _titleText; set { _titleText = value; Invalidate(); } }
 
         [Category("Appearance")]
-        // Prevent designer from trying to serialize this complex property
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public Font TitleFont
-        {
-            get => _titleFont;
-            set { _titleFont = value; Invalidate(); }
-        }
+        public Font TitleFont { get => _titleFont; set { _titleFont = value; Invalidate(); } }
 
         [Category("Appearance")]
         [DefaultValue(typeof(Color), "220,80,20")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        public Color TitleColor
-        {
-            get => _titleColor;
-            set { _titleColor = value; Invalidate(); }
-        }
+        public Color TitleColor { get => _titleColor; set { _titleColor = value; Invalidate(); } }
 
-        // This method tells the designer whether to serialize the TitleFont property
-        private bool ShouldSerializeTitleFont()
-        {
-            // Return false to prevent serialization – use default font
-            return false;
-        }
-
-        // Reset method for designer
-        private void ResetTitleFont()
-        {
-            TitleFont = new Font("Segoe UI", 12F, FontStyle.Bold);
-        }
+        private bool ShouldSerializeTitleFont() => false;
+        private void ResetTitleFont() => TitleFont = new Font("Segoe UI", 12F, FontStyle.Bold);
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -92,13 +52,10 @@ namespace PizzaOrderSystem
                 e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
                 e.Graphics.DrawPath(pen, path);
             }
-
             if (!string.IsNullOrEmpty(TitleText))
             {
                 using (SolidBrush brush = new SolidBrush(TitleColor))
-                {
                     e.Graphics.DrawString(TitleText, TitleFont, brush, 15, 8);
-                }
             }
         }
 

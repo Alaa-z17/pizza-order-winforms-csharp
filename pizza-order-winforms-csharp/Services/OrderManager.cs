@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using PizzaOrderSystem.Models;
 
@@ -11,7 +10,7 @@ namespace PizzaOrderSystem.Services
 
         static OrderManager()
         {
-            _orders = JsonFileStorage.LoadOrders();
+            _orders = OrdersJsonFileStorage.LoadOrders();
             if (_orders.Any())
                 Order._nextId = _orders.Max(o => o.OrderId) + 1;
         }
@@ -21,7 +20,7 @@ namespace PizzaOrderSystem.Services
         public static void PlaceOrder(Order order)
         {
             _orders.Add(order);
-            JsonFileStorage.SaveOrders(_orders);
+            OrdersJsonFileStorage.SaveOrders(_orders);
         }
 
         public static void UpdateOrderStatus(int orderId, OrderStatus newStatus)
@@ -30,7 +29,7 @@ namespace PizzaOrderSystem.Services
             if (order != null)
             {
                 order.Status = newStatus;
-                JsonFileStorage.SaveOrders(_orders);
+                OrdersJsonFileStorage.SaveOrders(_orders);
             }
         }
     }

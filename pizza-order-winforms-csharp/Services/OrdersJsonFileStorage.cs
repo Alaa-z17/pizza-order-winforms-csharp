@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -7,17 +6,13 @@ using PizzaOrderSystem.Models;
 
 namespace PizzaOrderSystem.Services
 {
-    public static class JsonFileStorage
+    public static class OrdersJsonFileStorage
     {
         private static readonly string _dataPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "orders.json");
         private static readonly JsonSerializerOptions _options = new JsonSerializerOptions
         {
             WriteIndented = true,
-            Converters =
-            {
-                new JsonStringEnumConverter(),
-                new PolymorphicBaseItemConverter()  // Add this line
-            }
+            Converters = { new JsonStringEnumConverter(), new PolymorphicBaseItemConverter() }
         };
 
         public static void SaveOrders(List<Order> orders)

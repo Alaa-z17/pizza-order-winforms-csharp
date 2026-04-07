@@ -11,6 +11,7 @@
         private System.Windows.Forms.Label lblDetails;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Button btnPrint;   // NEW: print button
 
         protected override void Dispose(bool disposing)
         {
@@ -28,6 +29,7 @@
             lblDetails = new System.Windows.Forms.Label();
             btnRefresh = new System.Windows.Forms.Button();
             btnClose = new System.Windows.Forms.Button();
+            btnPrint = new System.Windows.Forms.Button();  // NEW
             ((System.ComponentModel.ISupportInitialize)dgvOrders).BeginInit();
             SuspendLayout();
 
@@ -99,14 +101,26 @@
             lstDetails.Size = new System.Drawing.Size(580, 155);
             lstDetails.TabIndex = 3;
 
+            // NEW: btnPrint
+            btnPrint.BackColor = System.Drawing.Color.FromArgb(100, 100, 200);
+            btnPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnPrint.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            btnPrint.ForeColor = System.Drawing.Color.White;
+            btnPrint.Location = new System.Drawing.Point(12, 530);
+            btnPrint.Name = "btnPrint";
+            btnPrint.Size = new System.Drawing.Size(100, 32);
+            btnPrint.Text = "🖨️ Print";
+            btnPrint.UseVisualStyleBackColor = false;
+            btnPrint.Click += btnPrint_Click;
+
             // btnClose
             btnClose.BackColor = System.Drawing.Color.FromArgb(200, 80, 80);
             btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             btnClose.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             btnClose.ForeColor = System.Drawing.Color.White;
-            btnClose.Location = new System.Drawing.Point(512, 530);
+            btnClose.Location = new System.Drawing.Point(492, 530);
             btnClose.Name = "btnClose";
-            btnClose.Size = new System.Drawing.Size(80, 32);
+            btnClose.Size = new System.Drawing.Size(100, 32);
             btnClose.Text = "Close";
             btnClose.UseVisualStyleBackColor = false;
             btnClose.Click += btnClose_Click;
@@ -116,6 +130,7 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.FromArgb(248, 245, 240);
             ClientSize = new System.Drawing.Size(610, 580);
+            Controls.Add(btnPrint);    // NEW
             Controls.Add(btnClose);
             Controls.Add(lstDetails);
             Controls.Add(lblDetails);
@@ -128,7 +143,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "OrderHistoryForm";
-            StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Order History";
             ((System.ComponentModel.ISupportInitialize)dgvOrders).EndInit();
             ResumeLayout(false);

@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using PizzaOrderSystem.Models;
 using PizzaOrderSystem.Services;
 
+
 namespace PizzaOrderSystem.Forms
 {
     public partial class OrderHistoryForm : Form
@@ -24,7 +25,7 @@ namespace PizzaOrderSystem.Forms
             if (lstDetails == null) return;
 
             var parent = lstDetails.Parent;
-            if (parent == null) return; // Fix CS8602: check parent not null
+            if (parent == null) return;
 
             var location = lstDetails.Location;
             var size = lstDetails.Size;
@@ -57,6 +58,7 @@ namespace PizzaOrderSystem.Forms
             lblOrders.Text = LanguageManager.GetString("Orders");
             lblDetails.Text = LanguageManager.GetString("OrderDetails");
             btnClose.Text = LanguageManager.GetString("Close");
+            btnPrint.Text = LanguageManager.GetString("PrintInvoice"); // استخدام مفتاح الطباعة
         }
 
         private void LoadOrdersByDate(DateTime date)
@@ -112,6 +114,28 @@ namespace PizzaOrderSystem.Forms
                 return LanguageManager.GetString(side.SideType.ToString());
             else
                 return item.Name;
+        }
+
+        // NEW: طباعة الفاتورة للطلب المحدد
+        private void btnPrint_Click(object sender, EventArgs e)
+        {
+            if (dgvOrders.SelectedRows.Count == 0)
+            {
+                MessageBox.Show(LanguageManager.GetString("PleaseSelectOrderToPrint"),
+                                LanguageManager.GetString("Warning"),
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            object? rawValue = dgvOrders.SelectedRows[0].Cells[0].Value;
+            if (rawValue == null) return;
+
+            int orderId = Convert.ToInt32(rawValue);
+            var order = OrderManager.AllOrders.FirstOrDefault(o => o.OrderId == orderId);
+            if (order == null) return;
+
+            bool isArabic = (System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "ar");
+            InvoicePrinter.PrintInvoice(order, isArabic);
         }
 
         private void dtpDate_ValueChanged(object sender, EventArgs e) => LoadOrdersByDate(dtpDate.Value.Date);

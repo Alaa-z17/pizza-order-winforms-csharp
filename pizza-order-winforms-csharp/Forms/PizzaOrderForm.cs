@@ -1,12 +1,9 @@
 ﻿using pizza_order_winforms_csharp;
 using PizzaOrderSystem.Models;
 using PizzaOrderSystem.Services;
-using System;
-using System.Collections.Generic;
+
 using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
+
 
 namespace PizzaOrderSystem.Forms
 {
@@ -414,6 +411,21 @@ namespace PizzaOrderSystem.Forms
             if (Parent is MainMDIForm mainForm) mainForm.UpdateStatus(message);
         }
 
+        private void AskForPrinting(Order o)
+        {
+            DialogResult printResult = MessageBox.Show(
+            LanguageManager.GetString("AskPrintInvoice"),
+            LanguageManager.GetString("PrintInvoice"),
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Question);
+
+            if (printResult == DialogResult.Yes)
+            {
+                bool isArabic = System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "ar";
+                InvoicePrinter.PrintInvoice(o, isArabic);
+            }
+
+        }
         private void btnPlaceOrder_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtCustomerName.Text))
@@ -459,6 +471,8 @@ namespace PizzaOrderSystem.Forms
                                   $"━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
 
             MessageBox.Show(orderSummary, LanguageManager.GetString("OrderPlacedSuccess"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            AskForPrinting(order);
 
             StopCountdown();
             currentActiveOrder = order;

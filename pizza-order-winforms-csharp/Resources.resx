@@ -12,8 +12,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-
-  <!-- Existing keys (based on Resources.Designer.cs) -->
   <data name="AddDrink" xml:space="preserve">
     <value>🥤 ADD DRINK</value>
   </data>
@@ -31,6 +29,9 @@
   </data>
   <data name="AppTitle" xml:space="preserve">
     <value>Pizza Order System - Restaurant Management</value>
+  </data>
+  <data name="AskPrintInvoice" xml:space="preserve">
+    <value>Do you want to print the invoice?</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
@@ -73,6 +74,9 @@
   </data>
   <data name="Dash" xml:space="preserve">
     <value>-</value>
+  </data>
+  <data name="DateLabel" xml:space="preserve">
+    <value>Date</value>
   </data>
   <data name="Delivered" xml:space="preserve">
     <value>Delivered</value>
@@ -131,8 +135,14 @@
   <data name="InvalidSide" xml:space="preserve">
     <value>Invalid side selection.</value>
   </data>
+  <data name="InvoiceTitle" xml:space="preserve">
+    <value>Order Invoice</value>
+  </data>
   <data name="ItemCountFormat" xml:space="preserve">
     <value>Items: {0}</value>
+  </data>
+  <data name="ItemHeader" xml:space="preserve">
+    <value>Item</value>
   </data>
   <data name="ItemRemoved" xml:space="preserve">
     <value>Item Removed</value>
@@ -200,6 +210,9 @@
   <data name="OrderHistory" xml:space="preserve">
     <value>Order History</value>
   </data>
+  <data name="OrderNumber" xml:space="preserve">
+    <value>Order #</value>
+  </data>
   <data name="OrderPlaced" xml:space="preserve">
     <value>Order placed - Total:</value>
   </data>
@@ -257,6 +270,12 @@
   <data name="Preparing" xml:space="preserve">
     <value>Preparing</value>
   </data>
+  <data name="PriceHeader" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="QtyHeader" xml:space="preserve">
+    <value>Qty</value>
+  </data>
   <data name="Quantity" xml:space="preserve">
     <value>Quantity:</value>
   </data>
@@ -277,6 +296,9 @@
   </data>
   <data name="RemovedMsg" xml:space="preserve">
     <value>Removed {0} x {1}</value>
+  </data>
+  <data name="RestaurantName" xml:space="preserve">
+    <value>🍕 Pizza Order System</value>
   </data>
   <data name="Salad" xml:space="preserve">
     <value>Salad</value>
@@ -320,6 +342,12 @@
   <data name="Stuffed" xml:space="preserve">
     <value>Stuffed</value>
   </data>
+  <data name="Subtotal" xml:space="preserve">
+    <value>Subtotal</value>
+  </data>
+  <data name="ThankYouMessage" xml:space="preserve">
+    <value>Thank you for your order!</value>
+  </data>
   <data name="Thick" xml:space="preserve">
     <value>Thick</value>
   </data>
@@ -344,6 +372,9 @@
   <data name="TotalFormat" xml:space="preserve">
     <value>Total: {0:C}</value>
   </data>
+  <data name="TotalHeader" xml:space="preserve">
+    <value>Total</value>
+  </data>
   <data name="ValidationError" xml:space="preserve">
     <value>Validation Error</value>
   </data>
@@ -355,24 +386,5 @@
   </data>
   <data name="XSign" xml:space="preserve">
     <value>x</value>
-  </data>
-
-  <!-- NEW keys for drink names (English) -->
-  <data name="Drink_Sprite" xml:space="preserve">
-    <value>Sprite</value>
-  </data>
-  <data name="Drink_Fanta" xml:space="preserve">
-    <value>Fanta</value>
-  </data>
-  <data name="Drink_Water" xml:space="preserve">
-    <value>Water</value>
-  </data>
-  <data name="Drink_OrangeJuice" xml:space="preserve">
-    <value>Orange Juice</value>
-  </data>
-
-  <!-- Optional: Pizza base name if needed -->
-  <data name="Pizza" xml:space="preserve">
-    <value>Pizza</value>
   </data>
 </root>

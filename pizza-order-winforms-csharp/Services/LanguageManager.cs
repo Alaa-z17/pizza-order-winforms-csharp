@@ -35,14 +35,15 @@ namespace PizzaOrderSystem.Services
 
         public static string GetString(string key)
         {
-            return _resourceManager.GetString(key) ?? key;
+            var resource = new System.Resources.ResourceManager("pizza_order_winforms_csharp.Resources", typeof(LanguageManager).Assembly);
+            string? value = resource.GetString(key, System.Threading.Thread.CurrentThread.CurrentUICulture);
+            return string.IsNullOrEmpty(value) ? key : value;
         }
 
-        // FIX: Consistent currency formatting using a fixed culture (e.g., en-US)
+
         public static string FormatCurrency(decimal amount)
         {
-            var culture = new CultureInfo("en-US");
-            return amount.ToString("C", culture);
+            return amount.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("en-US"));
         }
     }
 }

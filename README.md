@@ -182,16 +182,14 @@ The multipliers then scale those base prices.
 
 ## 📸 Screenshots
 
-> *Add actual screenshots here*  
-> Example placeholders:
 
 | Main MDI Window | Pizza Order Form |
 |----------------|------------------|
-| ![Main window](screenshots/main.png) | ![Order form](screenshots/order.png) |
+| ![Main window](assests/MainMDI.png) | ![Order form](assests/Order.png) |
 
 | Order History | Invoice Print |
 |---------------|----------------|
-| ![History](screenshots/history.png) | ![Invoice](screenshots/invoice.png) |
+| ![History](assests/history.png) | ![Invoice](assests/invoice.png) |
 
 ---
 

@@ -10,7 +10,7 @@ Supports **multi‑language** (English / Arabic), real‑time order tracking, in
 ---
 ## 📺 Project Demo & Explanation
 
-[![Watch the video](https://img.youtube.com/vi/here/0.jpg)](https://youtu.be/here)
+[![Watch the video](https://img.youtube.com/vi/wn9mzyOkM9o/0.jpg)](https://youtu.be/wn9mzyOkM9o)
 
 ## 📌 Features
 

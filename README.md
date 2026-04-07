@@ -8,6 +8,9 @@ Supports **multi‑language** (English / Arabic), real‑time order tracking, in
 ![WinForms](https://img.shields.io/badge/UI-WinForms-green?logo=windows)
 
 ---
+## 📺 Project Demo & Explanation
+
+[![Watch the video](https://img.youtube.com/vi/here/0.jpg)](https://youtu.be/here)
 
 ## 📌 Features
 
